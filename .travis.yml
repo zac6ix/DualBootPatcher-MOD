@@ -11,8 +11,8 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-23.0.3
-  - android-23
+  - build-tools-25.0.2
+  - android-25
 
 before_install:
   - sudo apt install ccache expect libboost-dev libjansson-dev libssl-dev libyaml-cpp-dev openssl python-minimal 
@@ -45,10 +45,10 @@ script:
   - git submodule update --init --recursive
   - mkdir build
   - cd build/
-  - cmake .. -DMBP_BUILD_TARGET=android -DMBP_BUILD_TYPE=release
-  - 2>/dev/null 1>&2 make
+  - cmake .. -DMBP_BUILD_TARGET=android -DMBP_BUILD_TYPE=debug
+  - make
   - rm -rf assets && cpack -G TXZ
-  - 2>/dev/null 1>&2 make apk
+  - make apk
   - cd --
   - cd --
   - whereis Android_GUI-debug.apk
