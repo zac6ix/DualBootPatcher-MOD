@@ -2,11 +2,6 @@
 language: android
 jdk: oraclejdk8
 
-os: linux
-dist: xenial
-
-sudo: required
-
 android:
   components:
   - platform-tools
@@ -15,10 +10,8 @@ android:
   - android-25
 
 before_install:
-  - sudo apt install ccache expect libboost-dev libjansson-dev libssl-dev libyaml-cpp-dev openssl python-minimal 
-  - sudo apt install curl -y 
+  - sudo apt install ccache expect libboost-dev libjansson-dev libssl-dev libyaml-cpp-dev openssl python-minimal
   - cd --
-  - wget -q http://www.digip.org/jansson/releases/jansson-2.9.tar.gz && tar xzf jansson-2.9.tar.gz && cd jansson-2.9/ && ./configure && 2>/dev/null 1>&2 make && 2>/dev/null 1>&2 sudo make install && cd --
   - wget -q https://www.openssl.org/source/openssl-1.1.0c.tar.gz && tar xzf openssl-1.1.0c.tar.gz && cd openssl-1.1.0c && ./config shared --prefix=/usr/local/ssl --openssldir=/usr/local/ssl && 2>/dev/null 1>&2 make && 2>/dev/null 1>&2 sudo make install && export PATH=${PATH}:/usr/local/ssl && cd --
   - wget -q https://cmake.org/files/v3.9/cmake-3.9.0.tar.gz && tar xzf cmake-3.9.0.tar.gz && mv cmake-3.9.0 cmake && cd cmake && sed -i 's|cmake_options="-DCMAKE_BOOTSTRAP=1"|cmake_options="-DCMAKE_BOOTSTRAP=1 -DCMAKE_USE_OPENSSL=ON"|' bootstrap && ./bootstrap && 2>/dev/null 1>&2 make && 2>/dev/null 1>&2 sudo make install && cd --
   - wget -q https://dl.google.com/android/repository/android-ndk-r15-linux-x86_64.zip && unzip -qq android-ndk-r15-linux-x86_64.zip && mv android-ndk-r15 android-ndk
@@ -39,9 +32,10 @@ before_install:
   - echo -e "y" | ./tools/android update sdk -u -a -t 128
 
 script:
+  - travis_wait 30
   - cd --
-  - git clone https://github.com/iykequame/DualBootPatcher.git zac6ix/DualBootPatcher
-  - cd $PWD/zac6ix/DualBootPatcher
+  - git clone https://github.com/iykequame/DualBootPatcher.git zac6ix/DualBootPatcher/
+  - cd $PWD/zac6ix/DualBootPatcher/
   - git submodule update --init --recursive
   - mkdir build
   - cd build/
@@ -56,6 +50,7 @@ script:
   - cd zac6ix/DualBootPatcher/Android_GUI/build/outputs/apk/
   - mv Android_GUI-debug.apk DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_C7.apk
   - cp DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_C7.apk DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_W2.apk
+  - cp DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_C7.apk DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_Moto_E4-woods.apk
   ##upload for c7
   - FILEC7=DualBootPatcher-debug_$(date +%b-%d-%Y-%H:%M)_unofficial_C7.apk
   - export FILEC7
@@ -77,20 +72,3 @@ script:
   - us=iyke
   - key=HsHXIgOLoRXs
   - curl -ftp-pasv -T $FILEE4 ftp://$us:$key@$hst
-  
-deploy:
-  provider: releases
-  ##token ::: f97160e5747254c94fe924cc697e51bbcefc6a88
-  api_key: "$ZAC6IX_APK"
-  file: "$PWD/zac6ix/DualBootPatcher/Android_GUI/build/outputs/apk/Android_GUI-debug.apk"
-  skip_cleanup: true
-  on:
-    tags: true
-    all_branches: true
-    
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
-notifications:
-  slack: DualBootPatcher:e1f4a29e-f8d7-4e6f-80a5-6f175412399a
-  email: false    
