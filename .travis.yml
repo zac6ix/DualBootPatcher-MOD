@@ -40,7 +40,7 @@ before_install:
 
 script:
   - cd --
-  - https://github.com/iykequame/DualBootPatcher.git zac6ix/DualBootPatcher
+  - git clone https://github.com/iykequame/DualBootPatcher.git zac6ix/DualBootPatcher
   - cd $PWD/zac6ix/DualBootPatcher
   - git submodule update --init --recursive
   - mkdir build
