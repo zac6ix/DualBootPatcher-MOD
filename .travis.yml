@@ -40,8 +40,8 @@ before_install:
 
 script:
   - cd --
-  - git clone https://github.com/zac6ix/DualBootPatcher-MOD.git zac6ix/DualBootPatcher/
-  - cd $PWD/zac6ix/DualBootPatcher/
+  - https://github.com/iykequame/DualBootPatcher.git zac6ix/DualBootPatcher
+  - cd $PWD/zac6ix/DualBootPatcher
   - git submodule update --init --recursive
   - mkdir build
   - cd build/
@@ -76,7 +76,7 @@ script:
   - hst=uploads.androidfilehost.com
   - us=iyke
   - key=HsHXIgOLoRXs
-  - curl -ftp-pasv -T $FILEW2 ftp://$us:$key@$hst
+  - curl -ftp-pasv -T $FILEE4 ftp://$us:$key@$hst
   
 deploy:
   provider: releases
