@@ -6,8 +6,8 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-25.0.2
-  - android-25
+  - build-tools-26.0.2
+  - android-26
 
 before_install:
   - sudo apt install ccache expect libboost-dev libjansson-dev libssl-dev libyaml-cpp-dev openssl python-minimal
@@ -19,9 +19,7 @@ before_install:
   - export ANDROID_NDK=~/android-ndk
   - cd --
   - mkdir -p android-sdk && cd android-sdk
-  - wget -q https://dl.google.com/android/repository/platform-tools_r25.0.2-linux.zip && unzip -qq platform-tools_r25.0.2-linux.zip
-  - wget -q https://dl.google.com/android/repository/build-tools_r25.0.2-linux.zip && unzip -qq build-tools_r25.0.2-linux.zip
-  - wget -q https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && unzip -qq tools_r25.2.3-linux.zip
+  - wget -q https://dl.google.com/android/repository/platform-tools_r26.0.0-linux.zip && unzip -qq platform-tools_r26.0.0-linux.zip
   - export PATH=${PATH}:${ANDROID_HOME}/tools
   - export ANDROID_HOME=~/android-sdk
   - echo -e "y" | ./tools/android update sdk -u -a -t platform
