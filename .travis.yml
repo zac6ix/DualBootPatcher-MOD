@@ -22,7 +22,6 @@ before_install:
   - wget -q https://dl.google.com/android/repository/platform-tools_r26.0.0-linux.zip && unzip -qq platform-tools_r26.0.0-linux.zip
   - export PATH=${PATH}:${ANDROID_HOME}/tools
   - export ANDROID_HOME=~/android-sdk
-  - echo -e "y" | ./tools/android update sdk -u -a -t platform
   - echo -e "y" | ./tools/android update sdk -u -a -t platform-tools
   - echo -e "y" | ./tools/android update sdk -u -a -t 5
   - echo -e "y" | ./tools/android update sdk -u -a -t source
